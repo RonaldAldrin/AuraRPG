@@ -2,6 +2,7 @@
 
 
 #include "Player/AuraPlayerController.h"
+#include "Interaction/EnemyInterface.h"
 
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
@@ -11,6 +12,17 @@
 AAuraPlayerController::AAuraPlayerController()
 {
 	bReplicates = true;
+}
+
+void AAuraPlayerController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+
+	UEnhancedInputComponent* EnhancedInput = CastChecked<UEnhancedInputComponent>(InputComponent);
+
+	EnhancedInput->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAuraPlayerController::Move);
+
+
 }
 
 void AAuraPlayerController::BeginPlay()
@@ -33,15 +45,73 @@ void AAuraPlayerController::BeginPlay()
 
 }
 
-void AAuraPlayerController::SetupInputComponent()
+
+void AAuraPlayerController::PlayerTick(float DeltaTime)
 {
-	Super::SetupInputComponent();
+	Super::PlayerTick(DeltaTime);
 
-	UEnhancedInputComponent* EnhancedInput = CastChecked<UEnhancedInputComponent>(InputComponent);
+	CursorTrace();
+}
 
-	EnhancedInput->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAuraPlayerController::Move);
-	
-	
+void AAuraPlayerController::CursorTrace()
+{
+	FHitResult CursorHit;
+	bool SuccessHit = GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
+	if (!CursorHit.bBlockingHit) return;
+
+	LastActor = ThisActor;
+	ThisActor = Cast<IEnemyInterface>(CursorHit.GetActor());
+
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *CursorHit.GetActor()->GetName());
+
+	/*
+	* Line trace from cursor. there are sveral scenarios:
+	* A. LastActor is null && ThisActor is null
+	*	- Do nothing
+	* B. LastActor is null && ThisActor is valid
+	*	- Highlight ThisActor
+	* C. LastActor is valid && ThisActor is null
+	*	-UnHighlight LastActor
+	* D. Both actor are valid but LastActor != ThisActor
+	*	-UnHighlight Last Actor and Highlight ThisActor
+	* E. Both actors are valid, and are the same actor
+	*	-Do nothing
+	*/
+
+	if(LastActor == nullptr)
+	{
+		if (ThisActor != nullptr)
+		{
+			// Case B
+			ThisActor->HighlightActor();
+		}
+		else
+		{
+			// Case A both are null. do nothing
+		}
+	}
+	else // Last Actor is valid
+	{
+		if (ThisActor == nullptr)
+		{
+			//Case C
+			LastActor->UnHighlightActor();
+		}
+		else // Bothactor is valid
+		{
+			if (LastActor != ThisActor)
+			{
+				//Case D
+
+				LastActor->UnHighlightActor();
+				ThisActor->HighlightActor();
+			}
+			else
+			{
+				// Case E- both actor is valid do nothing
+			}
+		}
+	}
 }
 
 void AAuraPlayerController::Move(const FInputActionValue& Value)
@@ -57,8 +127,8 @@ void AAuraPlayerController::Move(const FInputActionValue& Value)
 	{
 		ControlledPawn->AddMovementInput(ForwardDirection, InputAxisVector.Y);
 		ControlledPawn->AddMovementInput(RightDirection, InputAxisVector.X);
-		UE_LOG(LogTemp, Warning, TEXT("%f"), ForwardDirection.Y);
-		UE_LOG(LogTemp, Warning, TEXT("%f"), InputAxisVector.X);
+		
 	}
 
 }
+
