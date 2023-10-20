@@ -4,6 +4,8 @@
 #include "Character/AuraCharacter.h"
 #include "Player/AuraPlayerState.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "UI/HUD/AuraHUD.h"
+#include "Player/AuraPlayerController.h"
 
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
@@ -43,6 +45,9 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 
 	// init ability actor info for the Server
 	InitAbilityActorInfo();
+
+
+
 }
 
 void AAuraCharacter::OnRep_PlayerState()
@@ -57,9 +62,19 @@ void AAuraCharacter::InitAbilityActorInfo()
 {
 	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
 	check(AuraPlayerState);
-	AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
+	AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this); // InitAbilityActorInfo set the owner of the abilitysystem and the avatar/character that will use the abilitysystem
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
 	AttributeSet = AuraPlayerState->GetAttrabuteSet();
+
+	if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController()))
+	{
+		//checkf(AuraHUD, TEXT("AuraHUD is invalid in multiplayer game do an if statement not assert check"));
+		if (AAuraHUD* AuraHUD = Cast<AAuraHUD>(AuraPlayerController->GetHUD()))
+		{
+			AuraHUD->InitOverlay(AuraPlayerController, AuraPlayerState, AbilitySystemComponent, AttributeSet);
+		}
+	
+	}
 }
 
 
