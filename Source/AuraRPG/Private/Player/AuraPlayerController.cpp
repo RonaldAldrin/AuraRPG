@@ -64,7 +64,7 @@ void AAuraPlayerController::CursorTrace()
 	LastActor = ThisActor;
 	ThisActor = Cast<IEnemyInterface>(CursorHit.GetActor());
 
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *CursorHit.GetActor()->GetName());
+	
 
 	/*
 	* Line trace from cursor. there are sveral scenarios:
