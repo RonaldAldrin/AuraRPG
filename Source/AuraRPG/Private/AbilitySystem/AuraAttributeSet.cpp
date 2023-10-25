@@ -35,7 +35,7 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 	if (Attribute == GetHealthAttribute())
 	{
 		NewValue = FMath::Clamp(NewValue, 0, GetMaxHealth());
-		UE_LOG(LogTemp, Warning, TEXT("Health %f"), NewValue);
+		
 	}
 	if (Attribute == GetManaAttribute())
 	{
@@ -96,11 +96,6 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	FEffectProperties Props;
 	SetEffectProperties(Data, Props);
 
-	if (Props.SourceASC)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("SourceASC is Valid"));
-	}
-	
 
 	/*if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
