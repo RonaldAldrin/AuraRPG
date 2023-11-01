@@ -4,6 +4,7 @@
 #include "UI/HUD/AuraHUD.h"
 #include "UI/Widget/AuraUserWidget.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
+#include "UI/WidgetController/AttributeWidgetController.h"
 
 
 void AAuraHUD::BeginPlay()
@@ -42,4 +43,20 @@ void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	OverlayWidget->AddToViewport();
 	
 }
+
+UAttributeWidgetController* AAuraHUD::GetAttributeWidgetController(const FWidgetControllerParams& WCPArams)
+{
+	if (AttributeWidgetController == nullptr)
+	{
+		AttributeWidgetController = NewObject<UAttributeWidgetController>(this, AttributeWidgetControllerClass);
+		AttributeWidgetController->SetWidgetControllerParams(WCPArams);
+		AttributeWidgetController->BindCallbacksToDependencies();
+
+		return AttributeWidgetController;
+	}
+	return AttributeWidgetController;
+}
+
+
+
 
