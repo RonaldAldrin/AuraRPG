@@ -11,6 +11,7 @@
 class UAbilitySystemComponent;
 class UAttributeSet;
 class UGameplayEffect;
+class UGameplayAbility;
 
 
 UCLASS(Abstract) // Abstract specifier preventing this class to drag to the world/ level
@@ -35,8 +36,15 @@ protected:
 
 	void InitializeDefaultAttributes() const; // this call from Auracharacter;
 
+	void AddCharacterAbilities(); // this call in AuraCharacter PossessedBy
+
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> WeaponMesh;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	FName WeaponTipSocketName;
+
+	virtual FVector GetCombatSocketLocation() override;
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
@@ -52,6 +60,11 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
 	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
+
+private:
+
+	UPROPERTY(Editanywhere,Category = "Abilities")
+	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
 
 public:	
 
