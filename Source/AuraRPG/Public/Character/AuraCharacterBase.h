@@ -12,6 +12,7 @@ class UAbilitySystemComponent;
 class UAttributeSet;
 class UGameplayEffect;
 class UGameplayAbility;
+class UMotionWarpingComponent;
 
 
 UCLASS(Abstract) // Abstract specifier preventing this class to drag to the world/ level
@@ -26,6 +27,10 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 	UAttributeSet* GetAttrabuteSet() const { return AttributeSet; }
+
+	/* My own solution for the quest
+	UFUNCTION(BlueprintCallable) 
+	virtual void UpdateWarpTarget(FName TargetName,const FVector& FacingTarget) override;*/
 
 protected:
 	virtual void BeginPlay() override;
@@ -60,6 +65,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
 	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
+	TObjectPtr<UMotionWarpingComponent> MotionWarpingComponent;
 
 private:
 

@@ -30,6 +30,8 @@ public:
 
 	virtual void PlayerTick(float DeltaTime) override;
 
+
+	FHitResult CursorHit;
 protected:
 
 	virtual void BeginPlay() override;
@@ -42,6 +44,10 @@ private:
 
 	void CursorTrace();
 
+	void ShiftPressed() { bShiftKeyDown = true; };
+	void ShiftReleased() { bShiftKeyDown = false; };
+	bool bShiftKeyDown = false;
+
 	/*
 	*  Inputs
 	*/
@@ -51,10 +57,13 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> MoveAction;
+	
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> ShiftAction;
 
 	IEnemyInterface* LastActor;
 	IEnemyInterface* ThisActor;
-	FHitResult CursorHit;
+	
 
 	void AbilityInputTagPressed(FGameplayTag InputTag);
 	void AbilityInputTagReleased(FGameplayTag InputTag);

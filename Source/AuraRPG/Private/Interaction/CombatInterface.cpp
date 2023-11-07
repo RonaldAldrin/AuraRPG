@@ -14,3 +14,8 @@ FVector ICombatInterface::GetCombatSocketLocation()
 {
 	return FVector();
 }
+
+/*void ICombatInterface::UpdateWarpTarget(FName TargetName, const FVector& FacingTarget)
+{
+}
+*/
