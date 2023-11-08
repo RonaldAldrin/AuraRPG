@@ -7,6 +7,7 @@
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "Components/WidgetComponent.h"
 #include "UI/Widget/AuraUserWidget.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 
 #include "DrawDebugHelpers.h"
 
@@ -60,6 +61,13 @@ void AAuraEnemy::BeginPlay()
 	
 }
 
+void AAuraEnemy::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
+
+
 void AAuraEnemy::InitAbilityActorInfo()
 {
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
@@ -68,11 +76,11 @@ void AAuraEnemy::InitAbilityActorInfo()
 	InitializeDefaultAttributes();
 }
 
-void AAuraEnemy::Tick(float DeltaTime)
+void AAuraEnemy::InitializeDefaultAttributes() const
 {
-	Super::Tick(DeltaTime);
-
+	UAuraAbilitySystemLibrary::InitializedDefaultAttributes(this, CharacterClass, Level, AbilitySystemComponent);
 }
+
 
 void AAuraEnemy::HighlightActor()
 {
