@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
 #include "Interaction/CombatInterface.h"
+#include "Components/TimelineComponent.h"
 #include "AuraCharacterBase.generated.h"
 
 class UAbilitySystemComponent;
@@ -13,6 +14,8 @@ class UAttributeSet;
 class UGameplayEffect;
 class UGameplayAbility;
 class UMotionWarpingComponent;
+class UAnimMontage;
+
 
 
 UCLASS(Abstract) // Abstract specifier preventing this class to drag to the world/ level
@@ -31,6 +34,13 @@ public:
 	/* My own solution for the quest
 	UFUNCTION(BlueprintCallable) 
 	virtual void UpdateWarpTarget(FName TargetName,const FVector& FacingTarget) override;*/
+
+	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
+
+	virtual void Die() override;
+
+	UFUNCTION(NetMulticast,Reliable)
+	virtual void MulticastHandleDeath();
 
 protected:
 	virtual void BeginPlay() override;
@@ -69,10 +79,47 @@ protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	TObjectPtr<UMotionWarpingComponent> MotionWarpingComponent;
 
+	/* Dissolve Effects*/
+
+	void Dissolve();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartDissolveTimeline(UMaterialInstanceDynamic* DynamicMaterialInstance);
+
+	void StartDissolveTimelineCPP();
+
+	UFUNCTION()
+	void UpdateDissolveMaterial(float DissolveValue);
+
+	
+	UPROPERTY(EditAnywhere,BlueprintReadOnly)
+	TObjectPtr<UMaterialInstance> DissolveMaterialInstance;
+
+	UMaterialInstanceDynamic* DynamicMatInst;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<UMaterialInstance> WeaponDissolveMaterialInstance;
+
+	UMaterialInstanceDynamic* WeaponDynamicMatInst;
+
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UTimelineComponent> DissolveTimeline;
+
+	FOnTimelineFloat DissolveTrack;
+	UPROPERTY(EditAnywhere)
+	UCurveFloat* DissolveCurve;
+
+
 private:
 
 	UPROPERTY(Editanywhere,Category = "Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
+
+	UPROPERTY(EditAnywhere,Category = "Montage")
+	TObjectPtr<UAnimMontage> HitReactMontage;
+
 
 public:	
 

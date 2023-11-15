@@ -18,6 +18,7 @@ class IEnemyInterface;
 class UAuraInputConfig;
 class UAuraAbilitySystemComponent;
 class USplineComponent;
+class UDamageTextComponent;
 
 UCLASS()
 class AURARPG_API AAuraPlayerController : public APlayerController
@@ -30,6 +31,9 @@ public:
 
 	virtual void PlayerTick(float DeltaTime) override;
 
+	UFUNCTION(Client,Reliable)
+	void ShowDamageNumber(float DamageAmount,ACharacter* TargetCharacter);
+
 
 	FHitResult CursorHit;
 protected:
@@ -38,6 +42,7 @@ protected:
 	virtual void SetupInputComponent() override;
 
 	
+
 private:
 
 	void Move(const FInputActionValue& Value);
@@ -90,4 +95,7 @@ private:
 	TObjectPtr<USplineComponent> Spline;
 
 	void AutoRun();
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UDamageTextComponent> DamageTextComponentClass;
 };

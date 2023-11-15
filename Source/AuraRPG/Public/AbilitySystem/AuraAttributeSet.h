@@ -162,7 +162,16 @@ public:
 	FGameplayAttributeData Mana;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Mana);
 
+
+	/*
+	*  Meta Attributes
+	*/
 	
+	UPROPERTY(BlueprintReadOnly,Category = "Meta ttributes")
+	FGameplayAttributeData IncomingDamage;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, IncomingDamage);
+
+
 
 	/*
 	*  Primary attributes Replicates
@@ -230,5 +239,5 @@ public:
 private:
 
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const;
-	
+	void ShowFloatingText(const FEffectProperties& Props, float Damage) const;
 };

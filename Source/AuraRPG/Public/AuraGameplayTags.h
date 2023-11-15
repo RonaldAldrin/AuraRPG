@@ -45,6 +45,10 @@ public:
 	FGameplayTag InputTag_3;
 	FGameplayTag InputTag_4;
 
+	FGameplayTag Damage;
+
+	FGameplayTag Effects_HitReact; // this will activate in AuraAttributeSet.cpp In PostGameplayEffectExecute
+
 protected:
 
 

@@ -11,6 +11,7 @@
 
 
 class UWidgetComponent;
+class UTimelineComponent;
 /**
  * 
  */
@@ -37,11 +38,24 @@ public:
 	virtual int32 GetPlayerLevel() override;
 	//** End CombatInterface */
 
+	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
+
+	virtual void Die() override;
+
 	UPROPERTY(BlueprintAssignable)
 	FOnAttributeChangedSignature OnHealthChanged;
 
 	UPROPERTY(BlueprintAssignable)
 	FOnAttributeChangedSignature OnMaxHealthChanged;
+
+	UPROPERTY(BlueprintReadOnly,Category = "Combat")
+	bool bHitReacting = false;
+
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category = "Combat")
+	float BaseWalkSpeed = 300.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+	float LifeSpan = 5.f;
 
 protected:
 
@@ -50,6 +64,8 @@ protected:
 	virtual void InitAbilityActorInfo() override;
 
 	virtual void InitializeDefaultAttributes()  const override;
+
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
 	int32 Level = 1;
@@ -61,6 +77,8 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UWidgetComponent> HealthBarWidget;
+
+
 
 
 	
