@@ -7,10 +7,13 @@
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "Components/WidgetComponent.h"
 #include "UI/Widget/AuraUserWidget.h"
+<<<<<<< HEAD
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AuraGameplayTags.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/TimelineComponent.h"
+=======
+>>>>>>> parent of ef2f4cd (Added RPG Chracter Classes)
 
 #include "DrawDebugHelpers.h"
 
@@ -74,13 +77,6 @@ void AAuraEnemy::BeginPlay()
 	
 }
 
-void AAuraEnemy::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-
 void AAuraEnemy::InitAbilityActorInfo()
 {
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
@@ -89,11 +85,11 @@ void AAuraEnemy::InitAbilityActorInfo()
 	InitializeDefaultAttributes();
 }
 
-void AAuraEnemy::InitializeDefaultAttributes() const
+void AAuraEnemy::Tick(float DeltaTime)
 {
-	UAuraAbilitySystemLibrary::InitializedDefaultAttributes(this, CharacterClass, Level, AbilitySystemComponent);
-}
+	Super::Tick(DeltaTime);
 
+}
 
 void AAuraEnemy::HighlightActor()
 {

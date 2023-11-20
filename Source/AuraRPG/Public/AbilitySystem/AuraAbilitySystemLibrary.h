@@ -4,13 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "Data/CharacterClassInfo.h"
 #include "AuraAbilitySystemLibrary.generated.h"
 
 class UOverlayWidgetController;
 class UAttributeWidgetController;
+<<<<<<< HEAD
 class UCharacterClassInfo;
 
+=======
+>>>>>>> parent of ef2f4cd (Added RPG Chracter Classes)
 /**
  * 
  */
@@ -26,6 +28,7 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController")
 	static UAttributeWidgetController* GetAttributeWidgetController(const UObject* WorldContextObject);
+<<<<<<< HEAD
 
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
 	static void InitializedDefaultAttributes(const UObject* WorldContextObject,ECharacterClass CharacterClass, float Level, UAbilitySystemComponent* ASC);
@@ -35,4 +38,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
 	static UCharacterClassInfo* GetCharacterClassInfo(const UObject* WorldContextObject);
+=======
+>>>>>>> parent of ef2f4cd (Added RPG Chracter Classes)
 };

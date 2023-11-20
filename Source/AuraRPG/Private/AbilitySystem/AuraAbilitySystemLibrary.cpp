@@ -5,12 +5,14 @@
 #include "UI/HUD/AuraHUD.h"
 #include "Player/AuraPlayerState.h"
 #include "UI/WidgetController/AuraWidgetController.h"
-#include "Game/AuraGameModeBase.h"
 
 #include "Kismet/GameplayStatics.h"
+<<<<<<< HEAD
 #include "AbilitySystemComponent.h"
 #include "Abilities/GameplayAbility.h"
 
+=======
+>>>>>>> parent of ef2f4cd (Added RPG Chracter Classes)
 
 UOverlayWidgetController* UAuraAbilitySystemLibrary::GetOverlayWidgetController(const UObject* WorldContextObject)
 {
@@ -59,10 +61,13 @@ UAttributeWidgetController* UAuraAbilitySystemLibrary::GetAttributeWidgetControl
 			FWidgetControllerParams WidgetControllerParams(PC, AuraPlayerState, ASC, AS);
 
 			return AuraHUD->GetAttributeWidgetController(WidgetControllerParams);
+
+
 		}
 	}
 	return nullptr;
 }
+<<<<<<< HEAD
 
 void UAuraAbilitySystemLibrary::InitializedDefaultAttributes(const UObject* WorldContextObject,ECharacterClass CharacterClass, float Level, UAbilitySystemComponent* ASC)
 {
@@ -112,3 +117,5 @@ UCharacterClassInfo* UAuraAbilitySystemLibrary::GetCharacterClassInfo(const UObj
 	return AuraGameMode->CharacterClassInfo;
 	
 }
+=======
+>>>>>>> parent of ef2f4cd (Added RPG Chracter Classes)
