@@ -7,13 +7,10 @@
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "Components/WidgetComponent.h"
 #include "UI/Widget/AuraUserWidget.h"
-<<<<<<< HEAD
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AuraGameplayTags.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/TimelineComponent.h"
-=======
->>>>>>> parent of ef2f4cd (Added RPG Chracter Classes)
 
 #include "DrawDebugHelpers.h"
 
@@ -40,7 +37,11 @@ void AAuraEnemy::BeginPlay()
 	GetCharacterMovement()->MaxWalkSpeed = BaseWalkSpeed;
 	InitAbilityActorInfo();
 
-	UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
+	if (HasAuthority())
+	{
+		UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
+	}
+	
 
 
 	if (UAuraUserWidget* AuraUserWidget = Cast<UAuraUserWidget>(HealthBarWidget->GetUserWidgetObject()))
@@ -77,19 +78,30 @@ void AAuraEnemy::BeginPlay()
 	
 }
 
-void AAuraEnemy::InitAbilityActorInfo()
-{
-	AbilitySystemComponent->InitAbilityActorInfo(this, this);
-	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
-
-	InitializeDefaultAttributes();
-}
-
 void AAuraEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
+
+
+void AAuraEnemy::InitAbilityActorInfo()
+{
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
+
+	if (HasAuthority())
+	{
+		InitializeDefaultAttributes();
+	}
+	
+}
+
+void AAuraEnemy::InitializeDefaultAttributes() const
+{
+	UAuraAbilitySystemLibrary::InitializedDefaultAttributes(this, CharacterClass, Level, AbilitySystemComponent);
+}
+
 
 void AAuraEnemy::HighlightActor()
 {

@@ -49,7 +49,7 @@ protected:
 
 	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect>GameplayEffectClass, float Level) const;
 
-	void InitializeDefaultAttributes() const; // this call from Auracharacter;
+	virtual void InitializeDefaultAttributes() const; // this call from Auracharacter;
 
 	void AddCharacterAbilities(); // this call in AuraCharacter PossessedBy
 

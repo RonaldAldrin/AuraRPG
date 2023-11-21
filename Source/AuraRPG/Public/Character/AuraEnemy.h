@@ -6,6 +6,7 @@
 #include "Character/AuraCharacterBase.h"
 #include "Interaction/EnemyInterface.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
+#include "AbilitySystem/Data/CharacterClassInfo.h"
 #include "AuraEnemy.generated.h"
 
 
@@ -62,15 +63,15 @@ protected:
 
 	virtual void InitAbilityActorInfo() override;
 
-<<<<<<< HEAD
 	virtual void InitializeDefaultAttributes()  const override;
 
 
 
-=======
->>>>>>> parent of ef2f4cd (Added RPG Chracter Classes)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
 	int32 Level = 1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
+	ECharacterClass CharacterClass = ECharacterClass::Warrior;
 
 private:
 
