@@ -26,6 +26,8 @@ AAuraCharacter::AAuraCharacter()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
+
+	Tags.Add(FName("Player"));
 }
 
 void AAuraCharacter::BeginPlay()
