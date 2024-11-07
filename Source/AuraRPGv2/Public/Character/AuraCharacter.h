@@ -13,6 +13,10 @@ UCLASS()
 class AURARPGV2_API AAuraCharacter : public AAuraCharacterBase
 {
 	GENERATED_BODY()
+
+public:
+
+	AAuraCharacter();
 	
 protected:
 
