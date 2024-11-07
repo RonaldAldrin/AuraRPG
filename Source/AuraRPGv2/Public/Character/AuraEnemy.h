@@ -14,12 +14,20 @@ UCLASS()
 class AURARPGV2_API AAuraEnemy : public AAuraCharacterBase, public IEnemyInterface
 {
 	GENERATED_BODY()
+
+
 	
 
 public:
 
+	AAuraEnemy();
+
+	virtual void Tick(float DeltaTime) override;
+
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
+
+	bool bIsHighlight = false;
 
 protected:
 

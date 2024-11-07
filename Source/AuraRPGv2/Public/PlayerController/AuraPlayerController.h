@@ -9,6 +9,7 @@
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
+class IEnemyInterface;
 /**
  * 
  */
@@ -20,6 +21,7 @@ class AURARPGV2_API AAuraPlayerController : public APlayerController
 public:
 
 	AAuraPlayerController();
+	virtual void PlayerTick(float DeltaTime) override;
 
 protected:
 
@@ -38,4 +40,8 @@ private:
 
 	void Move(const FInputActionValue& InputActionValue);
 
+	void CursorTrace();
+	
+	TObjectPtr<IEnemyInterface> LastActor;
+	TObjectPtr<IEnemyInterface> ThisActor;
 };
