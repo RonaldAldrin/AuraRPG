@@ -2,9 +2,12 @@
 
 
 #include "Character/AuraEnemy.h"
-#include "DrawDebugHelpers.h"
+
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystem/AuraAttributeSet.h"
 #include "AuraRPGv2/AuraRPGv2.h"
 
+#include "DrawDebugHelpers.h"
 
 AAuraEnemy::AAuraEnemy()
 {
@@ -14,6 +17,12 @@ AAuraEnemy::AAuraEnemy()
 	GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
 	Weapon->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
 
+	AbilitySystemComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitySystemComponent");
+	AbilitySystemComponent->SetIsReplicated(true);
+	//Minimal is for multiplayer game only for AI-Controlled
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
+
+	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 }
 
 void AAuraEnemy::BeginPlay()
