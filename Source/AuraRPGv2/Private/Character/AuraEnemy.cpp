@@ -28,35 +28,27 @@ AAuraEnemy::AAuraEnemy()
 void AAuraEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-
+	// this initialized is only work if the abilitysystemcomponent is on the pawn not on the playerstate.
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 }
 
 void AAuraEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (bIsHighlight)
-	{
-		//DrawDebugSphere(GetWorld(), GetActorLocation(), 60, 10, FColor::Red, false, -1, 0.f);
-	}
 
+	//DrawDebugSphere(GetWorld(), GetActorLocation(), 60, 10, FColor::Red, false, -1, 0.f);
 }
 
 void AAuraEnemy::HighlightActor()
 {
-	bIsHighlight = true;
 	
 	GetMesh()->SetRenderCustomDepth(true);
 	Weapon->SetRenderCustomDepth(true);
-
-	
 }
 
 void AAuraEnemy::UnHighlightActor()
 {
-	bIsHighlight = false;
-
 	GetMesh()->SetRenderCustomDepth(false);
 	Weapon->SetRenderCustomDepth(false);
-	
 }

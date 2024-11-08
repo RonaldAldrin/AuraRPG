@@ -24,10 +24,13 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+
+	/* begin Enemy Interface */
+
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
 
-	bool bIsHighlight = false;
+	/* end Enemy Interface */
 
 protected:
 
