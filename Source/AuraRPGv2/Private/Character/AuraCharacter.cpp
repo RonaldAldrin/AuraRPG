@@ -3,10 +3,13 @@
 
 #include "Character/AuraCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "Player/AuraPlayerState.h"
+#include "Player/AuraPlayerController.h"
+#include "UI/HUD/AuraHUD.h"
 
 AAuraCharacter::AAuraCharacter()
 {
@@ -24,7 +27,6 @@ AAuraCharacter::AAuraCharacter()
 void AAuraCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 void AAuraCharacter::PossessedBy(AController* NewController)
@@ -33,6 +35,9 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 
 	// init ability actor info for the Server
 	InitAbilityActorInfo();
+
+
+
 
 }
 
@@ -53,5 +58,17 @@ void AAuraCharacter::InitAbilityActorInfo()
 	AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
 	AttributeSet = AuraPlayerState->GetAttributeSet();
+
+	if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController()))
+	{
+		if (AAuraHUD* AuraHUD = AuraPlayerController->GetHUD<AAuraHUD>())
+		{
+			AuraHUD->InitOverlay(AuraPlayerController, AuraPlayerState, AbilitySystemComponent, AttributeSet);
+		}
+	}
+	/* this is what i came up but it's valid and working
+	AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+	AAuraHUD* AuraHUD = AuraPlayerController->GetHUD<AAuraHUD>();
+	AuraHUD->InitOverlay(AuraPlayerController, AuraPlayerState, AbilitySystemComponent, AttributeSet);*/
 }
 
