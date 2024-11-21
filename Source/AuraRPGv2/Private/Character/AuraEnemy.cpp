@@ -29,7 +29,7 @@ void AAuraEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	// this initialized is only work if the abilitysystemcomponent is on the pawn not on the playerstate.
-	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	InitAbilityActorInfo();
 }
 
 void AAuraEnemy::Tick(float DeltaTime)
@@ -38,6 +38,13 @@ void AAuraEnemy::Tick(float DeltaTime)
 
 
 	//DrawDebugSphere(GetWorld(), GetActorLocation(), 60, 10, FColor::Red, false, -1, 0.f);
+}
+
+void AAuraEnemy::InitAbilityActorInfo()
+{
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
+
 }
 
 void AAuraEnemy::HighlightActor()

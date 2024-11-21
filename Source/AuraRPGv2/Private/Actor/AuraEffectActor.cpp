@@ -48,7 +48,7 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 
 
 	}
-	else
+	if (bDestroyOnEffectRemoval)
 	{
 		Destroy();
 	}

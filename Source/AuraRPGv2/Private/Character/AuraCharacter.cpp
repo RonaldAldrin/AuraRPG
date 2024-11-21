@@ -56,6 +56,9 @@ void AAuraCharacter::InitAbilityActorInfo()
 	check(AuraPlayerState);
 	// this initialized is only work if the abilitysystemcomponent is in the playerstate.
 	AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
+
+	Cast<UAuraAbilitySystemComponent>(AuraPlayerState->GetAbilitySystemComponent())->AbilityActorInfoSet();
+
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
 	AttributeSet = AuraPlayerState->GetAttributeSet();
 
