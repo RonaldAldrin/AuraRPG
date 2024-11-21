@@ -38,13 +38,28 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 		AuraAttributeSet->GetMaxManaAttribute()).AddUObject(this, &UOverlayWidgetController::MaxManaChanged);
 
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(
-		// if using lambda should have [] () {}
-		[](const FGameplayTagContainer& AssetTags)
+		// if using lambda should have [] () {} when capturing you can input [&] or [this]
+		[this](const FGameplayTagContainer& AssetTags)
 		{
 			for (const FGameplayTag& Tag : AssetTags)
 			{
-				const FString Msg = FString::Printf(TEXT("GE TAG: %s"), *Tag.ToString());
-				GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, Msg);
+
+				// For example, say that Tag = Message.HealthPotion
+
+
+				//"Message.HealthPotion".MatchesTag("Message") will return True, "Message".MatchesTag("Message.HealthPotion") will return False
+				// this can get the gameplaytag
+				FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
+				if (Tag.MatchesTag(MessageTag))
+				{
+					// when calling a member function. this need to have input in [] to work. need to capture that object of the class belongs to
+					const FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag);
+					MessageWidgetRow.Broadcast(*Row);
+
+					/*const FString Msg = FString::Printf(TEXT("GE TAG: %s"), *Tag.ToString());
+					GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, Msg);*/
+				}
+
 			}
 			
 		}

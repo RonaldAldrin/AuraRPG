@@ -21,6 +21,7 @@ public:
 	// this calls in Auracharacter and AuraEnemy
 	void AbilityActorInfoSet();
 
+	// this calls in overlaywidgetcontroller
 	FEffectAssetTags EffectAssetTags;
 
 protected:
