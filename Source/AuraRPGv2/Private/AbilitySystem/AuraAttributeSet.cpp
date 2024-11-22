@@ -34,6 +34,8 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 	// also this function is only use for clamping not good for attribute changes
 	Super::PreAttributeChange(Attribute, NewValue);
 
+
+	// this  attributes should also clamp in PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 	if (Attribute == GetHealthAttribute())
 	{
 		NewValue = FMath::Clamp(NewValue, 0, GetMaxHealth());
@@ -41,7 +43,6 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 	if (Attribute == GetManaAttribute())
 	{
 		NewValue = FMath::Clamp(NewValue, 0, GetMaxMana());
-		
 	}
 
 	//UE_LOG(LogTemp, Warning, TEXT("MaxMana: %f"), NewValue);
@@ -90,6 +91,15 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	FEffectProperties EffectProperties;
 	SetEffectProperties(Data, EffectProperties);
 	
+
+	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+	{
+		SetHealth(FMath::Clamp(GetHealth(), 0, GetMaxHealth()));
+	}
+	if (Data.EvaluatedData.Attribute == GetManaAttribute())
+	{
+		SetMana(FMath::Clamp(GetMana(), 0, GetMaxMana()));
+	}
 }
 
 void UAuraAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
