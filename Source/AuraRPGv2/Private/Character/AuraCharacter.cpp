@@ -62,7 +62,7 @@ void AAuraCharacter::InitAbilityActorInfo()
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
 
 	//this need to call after abilitysystemcomponent is set and valid
-	InitializePrimaryAttributes();
+	InitializedDefaultAttributes();
 
 	AttributeSet = AuraPlayerState->GetAttributeSet();
 
