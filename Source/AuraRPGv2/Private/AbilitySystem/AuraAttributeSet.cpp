@@ -11,10 +11,12 @@
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
-	InitHealth(10.f);
-	//InitMaxHealth(100.f);
+	//already initialized in AuraCharacterBase and create GameplayEffect Blueprint and initialized the health and mana
+
+	/*InitHealth(10.f); 
+	InitMaxHealth(100.f);
 	InitMana(50.f);
-	//InitMaxMana(100.f);
+	InitMaxMana(100.f);*/
 }
 
 void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -114,7 +116,7 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	FEffectProperties EffectProperties;
 	SetEffectProperties(Data, EffectProperties);
 	
-
+	
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
 		SetHealth(FMath::Clamp(GetHealth(), 0, GetMaxHealth()));
